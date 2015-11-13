@@ -12,7 +12,7 @@ Tidepool API endpoints for user management.
 + Response 200
 
 
-## Access Existing User [/auth/user/{userid}]
+## User ID Provided [/auth/user/{userid}]
 
 + Parameters
     + userid: `7c010ab0f5` (string, required) - ID of user to retrieve
@@ -60,7 +60,41 @@ below.
 
 + Response 200
 
-## Create User [/auth/user]
+
+### Delete User [DELETE]
+
+
++ Request (application/json)
+
+        {
+          "username":"mary@example.com",
+          "password":"myn3wpa55ord"
+        }
+
++ Response 202
+
+
+## User No ID Provided [/auth/user]
+
+### Get User From Token [GET]
+Decode user ID from token and retrieve user account.
+
++ Request
+
+    + Headers
+
+            x-tidepool-session-token: <token>
+
++ Response 200
+
+        {
+          "userid": "7c010ab0f5",
+          "username": "mary@example.com",
+          "emails": [
+            "mary@example.com"
+          ],
+          "termsAccepted": ""
+        }
 
 ### Signup User [POST]
 Create a user account. This is the first step of creating a "user object",
@@ -92,4 +126,73 @@ which includes and account and profile.
                 "mary@example.com"
               ],
               "termsAccepted": ""
+            }
+
+### Update User [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            x-tidepool-session-token: <token>
+
+    + Body
+
+            {
+                "updates": {
+                    "username": "mary_other@example.com"
+                  }
+            }
+
++ Response 200
+
+
+## Login [/auth/login]
+
+### Login [POST]
+
++ Request
+
+    + Headers
+
+            Authorization: Basic bWFyeUBleGFtcGxlLmNvbTpteW4zd3BhNTVvcmQ=
+
+
++ Response 200 (application/json)
+
+    + Headers
+
+            x-tidepool-session-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkdXIiOjIuNTkyZSswNiwiZXhwIjoxNDQ5OTU2NDM3LCJzdnIiOiJubyIsInVzciI6IjhhNTU4ZWRiYjkifQ.8DQe8cwEBX8t5uWW2Dn4qffSGZog2fTO6ki-6LdtCU0
+
+    + Body
+
+            {
+              "userid": "7c010ab0f5",
+              "username": "mary@example.com",
+              "emails": [
+                "mary@example.com"
+              ],
+              "termsAccepted": ""
+            }
+
+
+### Refresh Session [GET]
+
++ Request
+
+    + Headers
+
+            x-tidepool-session-token: <token> 
+
++ Response 200 (application/json)
+
+    + Headers
+
+            x-tidepool-session-token: <new token> 
+
+    + Body
+
+            {
+              "userid": "7c010ab0f5",
+              "isserver": false
             }
