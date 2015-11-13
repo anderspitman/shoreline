@@ -1,0 +1,5 @@
+To render and serve at localhost:3000, install 
+[aglio](https://github.com/danielgtaylor/aglio) then run:
+```
+aglio -i shoreline.apib -s
+```

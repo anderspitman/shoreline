@@ -1,0 +1,95 @@
+FORMAT: 1A
+HOST: api.tidepool.io
+
+# Tidepool User API
+
+## Status [/auth/status]
+
+Tidepool API endpoints for user management.
+
+### Get Current Status [GET]
+
++ Response 200
+
+
+## Access Existing User [/auth/user/{userid}]
+
++ Parameters
+    + userid: `7c010ab0f5` (string, required) - ID of user to retrieve
+
+### Get User [GET]
+Retrieve user account information. Defaults to current user.
+
++ Request
+
+    + Headers
+
+            x-tidepool-session-token: <token>
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                  "userid": "7c010ab0f5",
+                  "username": "mary@example.com",
+                  "emails": [
+                        "mary@example.com"
+                  ],
+                  "termsAccepted": ""
+            }
+
+
+### Update User [PUT]
+Apply updates to an existing user's account for any or all of the fields listed
+below.
+
++ Request (application/json)
+
+    + Headers
+
+            x-tidepool-session-token: <token>
+
+    + Body
+
+            {
+                "updates": {
+                    "username": "mary_other@example.com"
+                  }
+            }
+
++ Response 200
+
+## Create User [/auth/user]
+
+### Signup User [POST]
+Create a user account. This is the first step of creating a "user object",
+which includes and account and profile.
+
+
++ Request (application/json)
+
+        {
+          "username":"mary@example.com",
+          "password":"myn3wpa55ord",
+          "emails": [
+            "mary@example.com"
+          ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            x-tidepool-session-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkdXIiOjIuNTkyZSswNiwiZXhwIjoxNDQ5OTU2NDM3LCJzdnIiOiJubyIsInVzciI6IjhhNTU4ZWRiYjkifQ.8DQe8cwEBX8t5uWW2Dn4qffSGZog2fTO6ki-6LdtCU0
+
+    + Body
+
+            {
+              "userid": "7c010ab0f5",
+              "username": "mary@example.com",
+              "emails": [
+                "mary@example.com"
+              ],
+              "termsAccepted": ""
+            }
